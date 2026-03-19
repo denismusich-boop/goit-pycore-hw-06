@@ -36,8 +36,8 @@ class Record:
     def edit_phone(self, old_phone, new_phone):
         phone_obj = self.find_phone(old_phone)
         if phone_obj:
-            self.phones.remove(phone_obj)
-            self.phones.append(Phone(new_phone))
+            new_phone_obj = Phone(new_phone)
+            phone_obj.value = new_phone_obj.value
 
     def find_phone(self, phone):
         for phone_obj in self.phones:
@@ -46,7 +46,8 @@ class Record:
         return None
 
     def __str__(self):
-        return f"Contact name: {self.name.value}, phones: {'; '.join(p.value for p in self.phones)}"
+        return f"Contact name: {self.name.value}, phones: {'; '.join(str(p) for p in self.phones)}"
+
 
 class AddressBook(UserDict):
     def add_record(self, record):
@@ -58,3 +59,4 @@ class AddressBook(UserDict):
     def delete(self, name):
         if name in self.data:
             del self.data[name]
+            
